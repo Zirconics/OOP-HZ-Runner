@@ -43,7 +43,7 @@ export default class SilverTrophy {
     this.image = SilverTrophy.loadNewImage('assets/img/objects/silver_trophy.png');
     this.positionX = this.canvas.width / 2;
     this.positionY = 60;
-    this.speed = 2;
+    this.speed = 1.0;
 
     this.points = 5;
   }

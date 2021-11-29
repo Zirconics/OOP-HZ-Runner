@@ -82,6 +82,7 @@ export default class Game {
         this.totalScore += this.goldTrophy.getPoints();
         this.createRandomItem();
       } else if (this.goldTrophy.isCollidingWithBorders()) {
+        this.totalScore -= this.goldTrophy.getPoints();
         this.createRandomItem();
       }
     }
@@ -94,6 +95,7 @@ export default class Game {
         this.totalScore += this.silverTrophy.getPoints();
         this.createRandomItem();
       } else if (this.silverTrophy.isCollidingWithBorders()) {
+        this.totalScore -= this.silverTrophy.getPoints();
         this.createRandomItem();
       }
     }
@@ -106,6 +108,7 @@ export default class Game {
         this.totalScore += this.bronzeTrophy.getPoints();
         this.createRandomItem();
       } else if (this.bronzeTrophy.isCollidingWithBorders()) {
+        this.totalScore -= this.bronzeTrophy.getPoints();
         this.createRandomItem();
       }
     }
