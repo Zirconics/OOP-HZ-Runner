@@ -41,7 +41,6 @@ export default class RedCross {
     }
 
     this.image = RedCross.loadNewImage('assets/img/objects/face_on_cross.png');
-    this.positionX = this.canvas.width / 2;
     this.positionY = 60;
     this.speed = 1.0;
 

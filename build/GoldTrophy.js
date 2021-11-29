@@ -14,6 +14,7 @@ export default class GoldTrophy {
         this.middleLane = this.canvas.width / 2;
         this.rightLane = (this.canvas.width / 4) * 3;
         const random = GoldTrophy.randomInteger(1, 3);
+        console.log(random);
         if (random === 1) {
             this.positionX = this.leftLane;
         }
@@ -24,9 +25,8 @@ export default class GoldTrophy {
             this.positionX = this.rightLane;
         }
         this.image = GoldTrophy.loadNewImage('assets/img/objects/gold_trophy.png');
-        this.positionX = this.canvas.width / 2;
         this.positionY = 60;
-        this.speed = 5;
+        this.speed = 1.5;
         this.points = 10;
     }
     getPositionX() {

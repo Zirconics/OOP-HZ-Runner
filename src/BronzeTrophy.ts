@@ -30,6 +30,7 @@ export default class BronzeTrophy {
     this.rightLane = (this.canvas.width / 4) * 3;
 
     const random = BronzeTrophy.randomInteger(1, 3);
+    console.log(random);
     if (random === 1) {
       this.positionX = this.leftLane;
     }
@@ -41,7 +42,6 @@ export default class BronzeTrophy {
     }
 
     this.image = BronzeTrophy.loadNewImage('assets/img/objects/bronze_trophy.png');
-    this.positionX = this.canvas.width / 2;
     this.positionY = 60;
     this.speed = 0.5;
 

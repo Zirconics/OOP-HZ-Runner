@@ -14,6 +14,7 @@ export default class SilverTrophy {
         this.middleLane = this.canvas.width / 2;
         this.rightLane = (this.canvas.width / 4) * 3;
         const random = SilverTrophy.randomInteger(1, 3);
+        console.log(random);
         if (random === 1) {
             this.positionX = this.leftLane;
         }
@@ -24,9 +25,8 @@ export default class SilverTrophy {
             this.positionX = this.rightLane;
         }
         this.image = SilverTrophy.loadNewImage('assets/img/objects/silver_trophy.png');
-        this.positionX = this.canvas.width / 2;
         this.positionY = 60;
-        this.speed = 2;
+        this.speed = 1.0;
         this.points = 5;
     }
     getPositionX() {
