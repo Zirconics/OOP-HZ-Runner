@@ -1,4 +1,4 @@
-export default class Trophy {
+export default class GoldTrophy {
   private leftLane: number;
 
   private middleLane: number;
@@ -15,6 +15,8 @@ export default class Trophy {
 
   private canvas: HTMLCanvasElement;
 
+  private points: number;
+
   /**
    * Construct the trophy
    *
@@ -27,7 +29,7 @@ export default class Trophy {
     this.middleLane = this.canvas.width / 2;
     this.rightLane = (this.canvas.width / 4) * 3;
 
-    const random = Trophy.randomInteger(1, 3);
+    const random = GoldTrophy.randomInteger(1, 3);
     if (random === 1) {
       this.positionX = this.leftLane;
     }
@@ -38,10 +40,12 @@ export default class Trophy {
       this.positionX = this.rightLane;
     }
 
-    this.image = Trophy.loadNewImage('assets/img/objects/gold_trophy.png');
+    this.image = GoldTrophy.loadNewImage('assets/img/objects/gold_trophy.png');
     this.positionX = this.canvas.width / 2;
     this.positionY = 60;
-    this.speed = 1;
+    this.speed = 5;
+
+    this.points = 10;
   }
 
   /**
@@ -72,9 +76,18 @@ export default class Trophy {
   }
 
   /**
-   * @param elapsed
+   * Method that returns the value of the GoldTrophy item.
+   *
+   * @returns Returns point value of item.
    */
-  public move(elapsed: number) {
+  public getPoints(): number {
+    return this.points;
+  }
+
+  /**
+   * @param elapsed Time elapsed
+   */
+  public move(elapsed: number): void {
     this.positionY += this.speed * elapsed;
   }
 
@@ -91,9 +104,9 @@ export default class Trophy {
   }
 
   /**
-   * @param ctx
+   * @param ctx CanvasRenderingContext2D
    */
-  public draw(ctx: CanvasRenderingContext2D) {
+  public draw(ctx: CanvasRenderingContext2D): void {
     ctx.drawImage(
       this.image,
       this.positionX - this.image.width / 2,

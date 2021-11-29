@@ -1,5 +1,8 @@
 import KeyListener from './KeyListener.js';
-import Trophy from './Trophy';
+import GoldTrophy from './GoldTrophy.js';
+import BronzeTrophy from './BronzeTrophy.js';
+import SilverTrophy from './SilverTrophy.js';
+import RedCross from './RedCross.js';
 
 export default class Player {
   private leftLane: number;
@@ -30,16 +33,14 @@ export default class Player {
 
     this.keyListener = new KeyListener();
 
-    this.image = Player.loadNewImage(
-      './assets/img/players/character_robot_walk0.png',
-    );
+    this.image = Player.loadNewImage('assets/img/players/character_maleAdventurer_walk0.png');
     this.positionX = this.canvas.width / 2;
   }
 
   /**
    *
    */
-  public move() {
+  public move(): void {
     // Move player
     if (
       this.keyListener.isKeyDown(KeyListener.KEY_LEFT)
@@ -62,15 +63,18 @@ export default class Player {
   }
 
   /**
-   * @param trophy
+   * Collision detection of Player and GoldTrophy.
+   *
+   * @param goldTrophy GoldTrophy item
+   * @returns true if the player collides with the GoldTrophy
    */
-  public isCollidingWith(trophy: Trophy): boolean {
+  public collidesWithGoldTrophy(goldTrophy: GoldTrophy): boolean {
     if (
-      this.positionX < trophy.getPositionX() + trophy.getImage().width
-      && this.positionX + this.image.width > trophy.getPositionX()
+      this.positionX < goldTrophy.getPositionX() + goldTrophy.getImage().width
+      && this.positionX + this.image.width > goldTrophy.getPositionX()
       && this.canvas.height - 150
-        < trophy.getPositionY() + trophy.getImage().height
-      && this.canvas.height - 150 + this.image.height > trophy.getPositionY()
+        < goldTrophy.getPositionY() + goldTrophy.getImage().height
+      && this.canvas.height - 150 + this.image.height > goldTrophy.getPositionY()
     ) {
       return true;
     }
@@ -78,9 +82,66 @@ export default class Player {
   }
 
   /**
-   * @param ctx
+   * Collision detection of Player and SilverTrophy.
+   *
+   * @param silverTrophy SilverTrophy item
+   * @returns true if the player collides with the SilverTrophy
    */
-  public draw(ctx: CanvasRenderingContext2D) {
+  public collidesWithSilverTrophy(silverTrophy: SilverTrophy): boolean {
+    if (
+      this.positionX < silverTrophy.getPositionX() + silverTrophy.getImage().width
+        && this.positionX + this.image.width > silverTrophy.getPositionX()
+        && this.canvas.height - 150
+          < silverTrophy.getPositionY() + silverTrophy.getImage().height
+        && this.canvas.height - 150 + this.image.height > silverTrophy.getPositionY()
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Collision detection of Player and BronzeTrophy.
+   *
+   * @param bronzeTrophy BronzeTrophy item
+   * @returns true if the player collides with the BronzeTrophy
+   */
+  public collidesWithBronzeTrophy(bronzeTrophy: BronzeTrophy): boolean {
+    if (
+      this.positionX < bronzeTrophy.getPositionX() + bronzeTrophy.getImage().width
+          && this.positionX + this.image.width > bronzeTrophy.getPositionX()
+          && this.canvas.height - 150
+            < bronzeTrophy.getPositionY() + bronzeTrophy.getImage().height
+          && this.canvas.height - 150 + this.image.height > bronzeTrophy.getPositionY()
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Collision detection of Player and RedCross.
+   *
+   * @param redCross RedCross item
+   * @returns true if the player collides with the RedCross
+   */
+  public collidesWithRedCross(redCross: RedCross): boolean {
+    if (
+      this.positionX < redCross.getPositionX() + redCross.getImage().width
+            && this.positionX + this.image.width > redCross.getPositionX()
+            && this.canvas.height - 150
+              < redCross.getPositionY() + redCross.getImage().height
+            && this.canvas.height - 150 + this.image.height > redCross.getPositionY()
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * @param ctx CanvasRenderingContext2D
+   */
+  public draw(ctx: CanvasRenderingContext2D): void {
     ctx.drawImage(
       this.image,
       this.positionX - this.image.width / 2,
