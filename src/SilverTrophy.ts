@@ -9,7 +9,6 @@ export default class SilverTrophy extends GameElement {
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     this.image = SilverTrophy.loadNewImage('assets/img/objects/silver_trophy.png');
-
     this.points = 5;
   }
 }

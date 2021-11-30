@@ -9,7 +9,6 @@ export default class LightningBolt extends GameElement {
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     this.image = LightningBolt.loadNewImage('assets/img/objects/titled_yellow_power_icon.png');
-
     this.points = -10;
   }
 }
