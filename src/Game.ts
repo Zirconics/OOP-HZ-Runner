@@ -81,7 +81,7 @@ export default class Game {
       if (this.player.collidesWithGameElement(gameElement)) {
         this.totalScore += gameElement.getPoints();
         this.removeGameElementFromArray(gameElement);
-      } else if (gameElement.collidesWithCanvasBottom) {
+      } else if (gameElement.collidesWithCanvasBottom()) {
         this.removeGameElementFromArray(gameElement);
       }
     });
