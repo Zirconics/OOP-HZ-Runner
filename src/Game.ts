@@ -19,9 +19,7 @@ export default class Game {
   private player: Player;
 
   // The objects on the canvas
-  private scoringObject: GameElement;
-
-  private scoringObjectsArray: GameElement[];
+  private gameElementArray: GameElement[];
 
   // Score
   private totalScore: number;
@@ -39,7 +37,7 @@ export default class Game {
     this.canvas.height = window.innerHeight;
 
     // TODO create multiple objects over time
-    this.scoringObjectsArray = [];
+    this.gameElementArray = [];
     this.createRandomScoringObject();
 
     // Set the player at the center
@@ -75,14 +73,19 @@ export default class Game {
       this.createRandomScoringObject();
     }
 
-    if (this.scoringObject !== null) {
-      this.scoringObject.move(elapsed);
-
-      if (this.player.collidesWithGameElement(this.scoringObject)) {
-        this.totalScore += this.scoringObject.getPoints();
-      }
-    }
     // Move objects
+    // And handle the item collision.
+    this.gameElementArray.forEach((gameElement) => {
+      gameElement.move(elapsed);
+      console.log(gameElement);
+      
+      if (this.player.collidesWithGameElement(gameElement)) {
+        this.totalScore += gameElement.getPoints();
+        this.removeGameElementFromArray(gameElement);
+      } else if (gameElement.collidesWithCanvasBottom) {
+        this.removeGameElementFromArray(gameElement);
+      }
+    });
     return false;
   }
 
@@ -102,8 +105,8 @@ export default class Game {
 
     this.player.draw(ctx);
 
-    this.scoringObjectsArray.forEach((scoringObject) => {
-      scoringObject.draw(ctx);
+    this.gameElementArray.forEach((gameElement) => {
+      gameElement.draw(ctx);
     });
   }
 
@@ -118,26 +121,28 @@ export default class Game {
    * Create a random scoring object and clear the other scoring objects by setting them to `null`.
    */
   private createRandomScoringObject(): void {
-    console.log(this.scoringObjectsArray);
-    this.scoringObject = null;
-
     const random = Game.randomInteger(1, 4);
 
     if (random === 1) {
-      this.scoringObjectsArray.push(new GoldTrophy(this.canvas));
+      this.gameElementArray.push(new GoldTrophy(this.canvas));
     }
 
     if (random === 2) {
-      this.scoringObjectsArray.push(new SilverTrophy(this.canvas));
+      this.gameElementArray.push(new SilverTrophy(this.canvas));
     }
 
     if (random === 3) {
-      this.scoringObjectsArray.push(new RedCross(this.canvas));
+      this.gameElementArray.push(new RedCross(this.canvas));
     }
 
     if (random === 4) {
-      this.scoringObjectsArray.push(new LightningBolt(this.canvas));
+      this.gameElementArray.push(new LightningBolt(this.canvas));
     }
+  }
+
+  private removeGameElementFromArray(item: GameElement): void {
+    const index = this.gameElementArray.indexOf(item);
+    this.gameElementArray.splice(index, 1);
   }
 
   /**

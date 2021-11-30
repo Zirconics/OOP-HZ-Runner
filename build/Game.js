@@ -8,14 +8,13 @@ export default class Game {
     canvas;
     gameloop;
     player;
-    scoringObject;
-    scoringObjectsArray;
+    gameElementArray;
     totalScore;
     constructor(canvas) {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth / 3;
         this.canvas.height = window.innerHeight;
-        this.scoringObjectsArray = [];
+        this.gameElementArray = [];
         this.createRandomScoringObject();
         this.player = new Player(this.canvas);
         this.totalScore = 0;
@@ -30,12 +29,17 @@ export default class Game {
         if (this.gameloop.frameCount % 100 === 0) {
             this.createRandomScoringObject();
         }
-        if (this.scoringObject !== null) {
-            this.scoringObject.move(elapsed);
-            if (this.player.collidesWithGameElement(this.scoringObject)) {
-                this.totalScore += this.scoringObject.getPoints();
+        this.gameElementArray.forEach((gameElement) => {
+            gameElement.move(elapsed);
+            console.log(gameElement);
+            if (this.player.collidesWithGameElement(gameElement)) {
+                this.totalScore += gameElement.getPoints();
+                this.removeGameElementFromArray(gameElement);
             }
-        }
+            else if (gameElement.collidesWithCanvasBottom) {
+                this.removeGameElementFromArray(gameElement);
+            }
+        });
         return false;
     }
     render() {
@@ -44,29 +48,31 @@ export default class Game {
         this.writeTextToCanvas('UP arrow = middle | LEFT arrow = left | RIGHT arrow = right', this.canvas.width / 2, 40, 14);
         this.drawScore();
         this.player.draw(ctx);
-        this.scoringObjectsArray.forEach((scoringObject) => {
-            scoringObject.draw(ctx);
+        this.gameElementArray.forEach((gameElement) => {
+            gameElement.draw(ctx);
         });
     }
     drawScore() {
         this.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 80, 16);
     }
     createRandomScoringObject() {
-        console.log(this.scoringObjectsArray);
-        this.scoringObject = null;
         const random = Game.randomInteger(1, 4);
         if (random === 1) {
-            this.scoringObjectsArray.push(new GoldTrophy(this.canvas));
+            this.gameElementArray.push(new GoldTrophy(this.canvas));
         }
         if (random === 2) {
-            this.scoringObjectsArray.push(new SilverTrophy(this.canvas));
+            this.gameElementArray.push(new SilverTrophy(this.canvas));
         }
         if (random === 3) {
-            this.scoringObjectsArray.push(new RedCross(this.canvas));
+            this.gameElementArray.push(new RedCross(this.canvas));
         }
         if (random === 4) {
-            this.scoringObjectsArray.push(new LightningBolt(this.canvas));
+            this.gameElementArray.push(new LightningBolt(this.canvas));
         }
+    }
+    removeGameElementFromArray(item) {
+        const index = this.gameElementArray.indexOf(item);
+        this.gameElementArray.splice(index, 1);
     }
     writeTextToCanvas(text, xCoordinate, yCoordinate, fontSize = 20, color = 'red', alignment = 'center') {
         const ctx = this.canvas.getContext('2d');
