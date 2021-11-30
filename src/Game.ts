@@ -4,6 +4,7 @@ import GoldTrophy from './GoldTrophy.js';
 import LightningBolt from './LightningBolt.js';
 import RedCross from './RedCross.js';
 import SilverTrophy from './SilverTrophy.js';
+import GameElement from './GameElement.js';
 
 /**
  * Main class of this Game.
@@ -18,6 +19,8 @@ export default class Game {
   private player: Player;
 
   // The objects on the canvas
+  private scoringObject: GameElement;
+
   private goldTrophy: GoldTrophy;
 
   private silverTrophy: SilverTrophy;
