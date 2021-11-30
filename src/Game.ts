@@ -77,8 +77,7 @@ export default class Game {
     // And handle the item collision.
     this.gameElementArray.forEach((gameElement) => {
       gameElement.move(elapsed);
-      console.log(gameElement);
-      
+
       if (this.player.collidesWithGameElement(gameElement)) {
         this.totalScore += gameElement.getPoints();
         this.removeGameElementFromArray(gameElement);
